@@ -1,0 +1,767 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Community Feedback System</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+    <style>
+        /* Color Palette */
+        :root {
+            --color-accent: #88BDBC;
+            --color-primary: #254E58;
+            --color-secondary: #112D32;
+            --color-neutral-dark: #4F4A41;
+            --color-neutral-light: #6E6658;
+            --color-white: #FFFFFF;
+            --color-muted: #DADADA;
+            --color-sidebar: #1D3A3A;
+        }
+
+        body {
+            background-color: var(--color-white);
+            color: var(--color-neutral-dark);
+            font-family: 'Segoe UI', sans-serif;
+            margin: 0;
+        }
+
+        .navbar {
+            background-color: var(--color-accent);
+            padding: 20px;
+            border-bottom: 1px solid var(--color-primary);
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .navbar-brand {
+            color: var(--color-secondary);
+            font-size: 2rem;
+            font-family: 'Montserrat', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+            font-weight: bold;
+        }
+        
+        .nav-link {
+            color: var(--color-secondary);
+            transition: color 0.2s ease;
+            font-family: 'Arial', sans-serif;
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 500;
+        }
+        
+        .nav-link:hover {
+            color: var(--color-primary);
+        }
+        
+        .nav-item.active .nav-link {
+            color: var(--color-primary);
+            font-weight: 600;
+        }
+        
+        .header {
+            background-color: var(--color-primary);
+            color: white;
+            padding: 2rem 0;
+            margin-bottom: 2rem;
+        }
+
+        .form-container {
+            margin-bottom: 3rem;
+        }
+
+        /* Custom tab styling */
+        .nav-tabs {
+            border-bottom: 1px solid var(--color-accent);
+            margin-bottom: 25px;
+        }
+        
+        .nav-tabs .nav-link {
+            margin-bottom: -1px;
+            border: 1px solid transparent;
+            border-top-left-radius: 0.25rem;
+            border-top-right-radius: 0.25rem;
+            font-weight: 500;
+            padding: 12px 20px;
+        }
+        
+        .nav-tabs .nav-link.active {
+            color: var(--color-primary);
+            background-color: var(--color-white);
+            border-color: var(--color-accent) var(--color-accent) var(--color-white);
+            border-bottom: 3px solid var(--color-primary);
+        }
+        
+        .nav-tabs .nav-link:hover {
+            border-color: var(--color-muted) var(--color-muted) var(--color-accent);
+        }
+
+        #doubt-tab.active {
+            border-color: #d13636;
+        }
+        
+        #opinion-tab.active {
+            border-color: #3456bc;
+        }
+        
+        #feedback-tab.active {
+            border-color: #3dc43d;
+        }
+
+        .tab-pane {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .form-label {
+            font-weight: 500;
+        }
+
+        /* Card styling for submissions */
+        .card {
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border: none;
+            margin-bottom: 25px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.15);
+        }
+
+        .doubt-card {
+            border-left: 8px solid #d13636; /* Red accent for doubt */
+        }
+        
+        .opinion-card {
+            border-left: 8px solid #3456bc; /* Blue accent for opinion */
+        }
+        
+        .feedback-card {
+            border-left: 8px solid #3dc43d; /* Green accent for feedback */
+        }
+
+        .card-footer {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.875rem;
+            background-color: rgba(0, 0, 0, 0.03);
+        }
+
+        /* Custom button styling */
+        .btn-doubt {
+            background-color: #d13636;
+            border-color: #d13636;
+            color: white;
+        }
+        
+        .btn-doubt:hover {
+            background-color: #d13636;
+            border-color: #d13636;
+        }
+        
+        .btn-opinion {
+            background-color: #3456bc;
+            border-color: #3456bc;
+            color: white;
+        }
+        
+        .btn-opinion:hover {
+            background-color: #3456bc;
+            border-color: #3456bc;
+        }
+        
+        .btn-feedback {
+            background-color: #3dc43d;
+            border-color: #3dc43d;
+            color: white;
+        }
+        
+        .btn-feedback:hover {
+            background-color: #3dc43d;
+            border-color: #3dc43d;
+            color: white;
+        }
+
+        .rating {
+            display: inline-flex;
+            color: gold;
+        }
+
+        /* Rating stars for feedback */
+        .rating-select {
+            margin-bottom: 1rem;
+        }
+
+        .btn-outline-warning:hover {
+            background-color: #ffc107;
+            color: #212529;
+        }
+
+        .filter-bar {
+            margin-bottom: 1.5rem;
+            padding: 1rem;
+            background-color: white;
+            border-radius: 0.5rem;
+            box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+        }
+        
+        .empty-state {
+            text-align: center;
+            padding: 3rem;
+            color: var(--color-neutral-light);
+        }
+
+        .section-title {
+            margin-bottom: 30px;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--color-primary);
+        }
+
+        .section-title span {
+            color: var(--color-accent);
+        }
+
+        footer {
+            background-color: var(--color-secondary);
+            color: var(--color-white);
+            padding: 2rem 0;
+            margin-top: 3rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg">
+        <div class="container">
+            <a class="navbar-brand" href="#">Path Finder</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <!-- ms-auto pushes the navbar items to the right -->
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="dashboard.html">Dashboard</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="roadmap.html">Paths</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="feedback.html">Community</a>
+                    </li>
+                    <!-- Profile dropdown with icon -->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="profileDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fas fa-user-circle profile-icon"></i>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="profileDropdown">
+                            <li><a class="dropdown-item" href="profile.html"><i class="fas fa-user me-2"></i>My Profile</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="index.html"><i class="fas fa-sign-out-alt me-2"></i>Logout</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- Main Content -->
+    <main class="container">
+        <div class="section-title">
+            <h2> <span>Feedback</span> System</h2>
+        </div>
+        <p class="lead">Share your doubts, opinions, and feedback with our community.</p>
+        
+        <!-- Form Section -->
+        <section class="form-container">
+            <div class="row">
+                <div class="col-lg-8 mx-auto">
+                    <!-- Form Tabs -->
+                    <ul class="nav nav-tabs" id="feedbackTabs" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link active" id="doubt-tab" data-bs-toggle="tab" data-bs-target="#doubt-form" type="button" role="tab" aria-controls="doubt-form" aria-selected="true">
+                                <i class="fas fa-question-circle me-2"></i>Submit Doubt
+                            </button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="opinion-tab" data-bs-toggle="tab" data-bs-target="#opinion-form" type="button" role="tab" aria-controls="opinion-form" aria-selected="false">
+                                <i class="fas fa-comment me-2"></i>Share Opinion
+                            </button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="feedback-tab" data-bs-toggle="tab" data-bs-target="#feedback-form" type="button" role="tab" aria-controls="feedback-form" aria-selected="false">
+                                <i class="fas fa-star me-2"></i>Give Feedback
+                            </button>
+                        </li>
+                    </ul>
+                    
+                    <!-- Form Tab Contents -->
+                    <div class="tab-content" id="feedbackTabsContent">
+                        <!-- Doubt Form -->
+                        <div class="tab-pane fade show active" id="doubt-form" role="tabpanel" aria-labelledby="doubt-tab">
+                            <form id="doubtForm" class="card doubt-card p-4">
+                                <h4><i class="fas fa-question-circle me-2"></i>Ask Your Question</h4>
+                                <div class="mb-3">
+                                    <label for="doubtName" class="form-label">Your Name</label>
+                                    <input type="text" class="form-control" id="doubtName" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="doubtEmail" class="form-label">Email Address</label>
+                                    <input type="email" class="form-control" id="doubtEmail" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="doubtSubject" class="form-label">Subject</label>
+                                    <input type="text" class="form-control" id="doubtSubject" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="doubtContent" class="form-label">Your Question</label>
+                                    <textarea class="form-control" id="doubtContent" rows="5" required></textarea>
+                                </div>
+                                <div class="d-grid">
+                                    <button type="submit" class="btn btn-doubt">Submit Question</button>
+                                </div>
+                            </form>
+                        </div>
+                        
+                        <!-- Opinion Form -->
+                        <div class="tab-pane fade" id="opinion-form" role="tabpanel" aria-labelledby="opinion-tab">
+                            <form id="opinionForm" class="card opinion-card p-4">
+                                <h4><i class="fas fa-comment me-2"></i>Share Your Opinion</h4>
+                                <div class="mb-3">
+                                    <label for="opinionName" class="form-label">Your Name</label>
+                                    <input type="text" class="form-control" id="opinionName" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="opinionEmail" class="form-label">Email Address</label>
+                                    <input type="email" class="form-control" id="opinionEmail" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="opinionTopic" class="form-label">Topic</label>
+                                    <input type="text" class="form-control" id="opinionTopic" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="opinionContent" class="form-label">Your Opinion</label>
+                                    <textarea class="form-control" id="opinionContent" rows="5" required></textarea>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Visibility</label>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="opinionVisibility" id="visibilityPublic" value="public" checked>
+                                        <label class="form-check-label" for="visibilityPublic">
+                                            Public (Share with the community)
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="opinionVisibility" id="visibilityPrivate" value="private">
+                                        <label class="form-check-label" for="visibilityPrivate">
+                                            Private (Only visible to administrators)
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="d-grid">
+                                    <button type="submit" class="btn btn-opinion">Share Opinion</button>
+                                </div>
+                            </form>
+                        </div>
+                        
+                        <!-- Feedback Form -->
+                        <div class="tab-pane fade" id="feedback-form" role="tabpanel" aria-labelledby="feedback-tab">
+                            <form id="feedbackForm" class="card feedback-card p-4">
+                                <h4><i class="fas fa-star me-2"></i>Provide Feedback</h4>
+                                <div class="mb-3">
+                                    <label for="feedbackName" class="form-label">Your Name</label>
+                                    <input type="text" class="form-control" id="feedbackName" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="feedbackEmail" class="form-label">Email Address</label>
+                                    <input type="email" class="form-control" id="feedbackEmail" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="feedbackCategory" class="form-label">Category</label>
+                                    <select class="form-select" id="feedbackCategory" required>
+                                        <option value="" selected disabled>Select a category</option>
+                                        <option value="Content">Content</option>
+                                        <option value="User Interface">User Interface</option>
+                                        <option value="Technical Support">Technical Support</option>
+                                        <option value="Features">Features</option>
+                                        <option value="General">General</option>
+                                    </select>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Rating</label>
+                                    <div class="rating-select">
+                                        <div class="btn-group" role="group">
+                                            <input type="radio" class="btn-check" name="rating" id="rating1" value="1" required>
+                                            <label class="btn btn-outline-warning" for="rating1">1 <i class="fas fa-star"></i></label>
+                                            
+                                            <input type="radio" class="btn-check" name="rating" id="rating2" value="2">
+                                            <label class="btn btn-outline-warning" for="rating2">2 <i class="fas fa-star"></i></label>
+                                            
+                                            <input type="radio" class="btn-check" name="rating" id="rating3" value="3">
+                                            <label class="btn btn-outline-warning" for="rating3">3 <i class="fas fa-star"></i></label>
+                                            
+                                            <input type="radio" class="btn-check" name="rating" id="rating4" value="4">
+                                            <label class="btn btn-outline-warning" for="rating4">4 <i class="fas fa-star"></i></label>
+                                            
+                                            <input type="radio" class="btn-check" name="rating" id="rating5" value="5">
+                                            <label class="btn btn-outline-warning" for="rating5">5 <i class="fas fa-star"></i></label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="feedbackContent" class="form-label">Your Feedback</label>
+                                    <textarea class="form-control" id="feedbackContent" rows="5" required></textarea>
+                                </div>
+                                <div class="mb-3">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="contactMe">
+                                        <label class="form-check-label" for="contactMe">
+                                            I would like to be contacted regarding my feedback
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="d-grid">
+                                    <button type="submit" class="btn btn-feedback">Submit Feedback</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Submissions Display Section -->
+        <section class="submissions-container">
+            <div class="section-title">
+                <h2> <span>Submissions</span></h2>
+            </div>
+            
+            <!-- Filter Bar -->
+            <div class="filter-bar">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="searchInput" placeholder="Search submissions...">
+                            <button class="btn btn-dark" type="button" id="searchBtn">
+                                <i class="fas fa-search"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="btn-group float-md-end" role="group">
+                            <button type="button" class="btn btn-outline-secondary active" data-filter="all">All</button>
+                            <button type="button" class="btn btn-outline-danger" data-filter="doubt">Doubts</button>
+                            <button type="button" class="btn btn-outline-primary" data-filter="opinion">Opinions</button>
+                            <button type="button" class="btn btn-outline-success" data-filter="feedback">Feedback</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Submissions List -->
+            <div id="submissionsList">
+                <!-- Submissions will be displayed here -->
+                <div class="empty-state">
+                    <i class="fas fa-comments fa-4x mb-3"></i>
+                    <h3>No submissions yet</h3>
+                    <p>Be the first to submit your doubts, opinions, or feedback!</p>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <!-- Footer -->
+    <footer class="py-4 mt-5">
+        <div class="container text-center">
+        </div>
+    </footer>
+
+    <!-- Bootstrap & jQuery JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    
+    <script>
+        // Initialize the data store
+        if (!localStorage.getItem('submissions')) {
+            localStorage.setItem('submissions', JSON.stringify([]));
+        }
+        
+        // DOM Ready
+        document.addEventListener('DOMContentLoaded', function() {
+            // Load all submissions
+            loadSubmissions();
+            
+            // Set up form submission handlers
+            document.getElementById('doubtForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                submitDoubt();
+            });
+            
+            document.getElementById('opinionForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                submitOpinion();
+            });
+            
+            document.getElementById('feedbackForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                submitFeedback();
+            });
+            
+            // Set up filter buttons
+            const filterButtons = document.querySelectorAll('.btn-group [data-filter]');
+            filterButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    // Remove active class from all buttons
+                    filterButtons.forEach(btn => btn.classList.remove('active'));
+                    // Add active class to clicked button
+                    this.classList.add('active');
+                    // Filter submissions
+                    loadSubmissions(this.getAttribute('data-filter'));
+                });
+            });
+            
+            // Set up search
+            document.getElementById('searchBtn').addEventListener('click', function() {
+                const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+                loadSubmissions('all', searchTerm);
+            });
+            
+            document.getElementById('searchInput').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    const searchTerm = this.value.toLowerCase();
+                    loadSubmissions('all', searchTerm);
+                }
+            });
+        });
+        
+        // Function to submit a doubt
+        function submitDoubt() {
+            const name = document.getElementById('doubtName').value;
+            const email = document.getElementById('doubtEmail').value;
+            const subject = document.getElementById('doubtSubject').value;
+            const content = document.getElementById('doubtContent').value;
+            
+            const submission = {
+                id: generateId(),
+                type: 'doubt',
+                name: name,
+                email: email,
+                subject: subject,
+                content: content,
+                timestamp: new Date().toISOString()
+            };
+            
+            saveSubmission(submission);
+            resetForm('doubtForm');
+            showAlert('Your question has been submitted successfully!', 'success');
+            loadSubmissions(); // Reload submissions to show the new one
+        }
+        
+        // Function to submit an opinion
+        function submitOpinion() {
+            const name = document.getElementById('opinionName').value;
+            const email = document.getElementById('opinionEmail').value;
+            const topic = document.getElementById('opinionTopic').value;
+            const content = document.getElementById('opinionContent').value;
+            const visibility = document.querySelector('input[name="opinionVisibility"]:checked').value;
+            
+            const submission = {
+                id: generateId(),
+                type: 'opinion',
+                name: name,
+                email: email,
+                subject: topic,
+                content: content,
+                visibility: visibility,
+                timestamp: new Date().toISOString()
+            };
+            
+            saveSubmission(submission);
+            resetForm('opinionForm');
+            showAlert('Your opinion has been shared successfully!', 'primary');
+            loadSubmissions(); // Reload submissions to show the new one
+        }
+        
+        // Function to submit feedback
+        function submitFeedback() {
+            const name = document.getElementById('feedbackName').value;
+            const email = document.getElementById('feedbackEmail').value;
+            const category = document.getElementById('feedbackCategory').value;
+            const rating = document.querySelector('input[name="rating"]:checked').value;
+            const content = document.getElementById('feedbackContent').value;
+            const contactMe = document.getElementById('contactMe') ? document.getElementById('contactMe').checked : false;
+            
+            const submission = {
+                id: generateId(),
+                type: 'feedback',
+                name: name,
+                email: email,
+                subject: category,
+                content: content,
+                rating: rating,
+                contactMe: contactMe,
+                timestamp: new Date().toISOString()
+            };
+            
+            saveSubmission(submission);
+            resetForm('feedbackForm');
+            showAlert('Thank you for your feedback!', 'success');
+            loadSubmissions(); // Reload submissions to show the new one
+        }
+        
+        // Function to save submission to localStorage
+        function saveSubmission(submission) {
+            const submissions = JSON.parse(localStorage.getItem('submissions')) || [];
+            submissions.push(submission);
+            localStorage.setItem('submissions', JSON.stringify(submissions));
+        }
+        
+        // Function to load and display submissions
+        function loadSubmissions(filter = 'all', searchTerm = '') {
+            let submissions = JSON.parse(localStorage.getItem('submissions')) || [];
+            
+            // Sort by timestamp (newest first)
+            submissions.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+            
+            // Apply filter if needed
+            if (filter !== 'all') {
+                submissions = submissions.filter(sub => sub.type === filter);
+            }
+            
+            // Apply search if provided
+            if (searchTerm) {
+                submissions = submissions.filter(sub => {
+                    return (
+                        sub.name.toLowerCase().includes(searchTerm) ||
+                        sub.subject.toLowerCase().includes(searchTerm) ||
+                        sub.content.toLowerCase().includes(searchTerm)
+                    );
+                });
+            }
+            
+            // Get the container and clear it
+            const container = document.getElementById('submissionsList');
+            container.innerHTML = '';
+            
+            // If no submissions, show empty state
+            if (submissions.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-comments fa-4x mb-3"></i>
+                        <h3>No submissions found</h3>
+                        <p>Be the first to submit your doubts, opinions, or feedback!</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            // Create cards for each submission
+            submissions.forEach(sub => {
+                const card = document.createElement('div');
+                card.className = card submission-card ${sub.type}-card;
+                
+                let cardContent = `
+                    <div class="card-body">
+                        <h5 class="card-title">${sub.subject}</h5>
+                        <p class="card-text">${sub.content}</p>
+                `;
+                
+                // Add specific elements based on submission type
+                if (sub.type === 'opinion') {
+                    cardContent += <p class="text-muted small">Visibility: ${sub.visibility}</p>;
+                }
+                
+                if (sub.type === 'feedback' && sub.rating) {
+                    cardContent += `
+                        <div class="rating mb-2">
+                            ${generateStars(sub.rating)}
+                        </div>
+                    `;
+                }
+                
+                // Add footer with name and date
+                cardContent += `
+                    </div>
+                    <div class="card-footer text-muted">
+                        <span>By: ${sub.name}</span>
+                        <span>${formatDate(sub.timestamp)}</span>
+                    </div>
+                `;
+                
+                card.innerHTML = cardContent;
+                container.appendChild(card);
+            });
+        }
+        
+        // Helper Functions
+        
+        // Generate a unique ID
+        function generateId() {
+            return Date.now().toString(36) + Math.random().toString(36).substr(2);
+        }
+        
+        // Reset a form after submission
+        function resetForm(formId) {
+            document.getElementById(formId).reset();
+        }
+        
+        // Format date to readable string
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            return date.toLocaleString();
+        }
+        
+        // Generate HTML stars based on rating
+        function generateStars(rating) {
+            let stars = '';
+            for (let i = 1; i <= 5; i++) {
+                if (i <= rating) {
+                    stars += '<i class="fas fa-star"></i>';
+                } else {
+                    stars += '<i class="far fa-star"></i>';
+                }
+            }
+            return stars;
+        }
+        
+        // Show an alert message
+        function showAlert(message, type = 'info') {
+            // Create alert element
+            const alertDiv = document.createElement('div');
+            alertDiv.className = alert alert-${type} alert-dismissible fade show;
+            alertDiv.role = 'alert';
+            alertDiv.innerHTML = `
+                ${message}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            `;
+            
+            // Insert at the top of the page
+            const header = document.querySelector('header');
+            header.parentNode.insertBefore(alertDiv, header.nextSibling);
+            
+            // Auto dismiss after 5 seconds
+            setTimeout(() => {
+                alertDiv.classList.remove('show');
+                setTimeout(() => alertDiv.remove(), 150);
+            }, 5000);
+        }
+    </script>
+</body>
+</html>
