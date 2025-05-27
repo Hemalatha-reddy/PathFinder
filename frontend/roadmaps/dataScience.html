@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Science Roadmap</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome for icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        /* Color Palette */
+        :root {
+            --color-accent: #88BDBC;
+            --color-primary: #254E58;
+            --color-secondary: #112D32;
+            --color-neutral-dark: #4F4A41;
+            --color-neutral-light: #6E6658;
+            --color-white: #FFFFFF;
+            --color-muted: #DADADA;
+        }
+
+        body {
+            background-color: var(--color-white);
+            color: var(--color-neutral-dark);
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        .navbar {
+            background-color: var(--color-accent);
+            padding: 20px;
+            border-bottom: 1px solid var(--color-primary);
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .navbar-brand {
+            color: var(--color-secondary);
+            font-size: 2rem;
+            font-family: 'Montserrat', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+            font-weight: bold;
+        }
+        
+        .nav-link {
+            color: var(--color-secondary);
+            transition: color 0.2s ease;
+            font-family: 'Arial', sans-serif;
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 500;
+        }
+        
+        .nav-link:hover {
+            color: var(--color-primary);
+        }
+        
+        .nav-item.active .nav-link {
+            color: var(--color-primary);
+            font-weight: 600;
+        }
+        
+        .navbar-toggler-icon {
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='30' height='30' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(17, 45, 50, 0.8)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+        }
+        
+        .dropdown-menu {
+            background-color: var(--color-accent);
+            border: 1px solid var(--color-primary);
+        }
+        
+        .dropdown-item {
+            color: var(--color-secondary);
+        }
+        
+        .dropdown-item:hover {
+            background-color: var(--color-primary);
+            color: var(--color-white);
+        }
+        
+        .profile-icon {
+            font-size: 1.2rem;
+            margin-right: 5px;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-top: 50px;
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--color-primary);
+        }
+
+        .section-title span {
+            color: var(--color-accent);
+        }
+
+        .roadmap-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            gap: 30px;
+            margin-top: 50px;
+            padding: 0 20px 50px;
+        }
+
+        .roadmap-card {
+            background-color: var(--color-white);
+            border-radius: 10px;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            width: 280px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border-left: 8px solid var(--color-accent);
+        }
+
+        .roadmap-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .roadmap-card:nth-child(3n+1) {
+            border-left-color: var(--color-accent);
+        }
+
+        .roadmap-card:nth-child(3n+2) {
+            border-left-color: var(--color-primary);
+        }
+
+        .roadmap-card:nth-child(3n+3) {
+            border-left-color: var(--color-secondary);
+        }
+
+        .roadmap-card i {
+            font-size: 3rem;
+            color: var(--color-primary);
+            margin-bottom: 20px;
+        }
+
+        .roadmap-card h4 {
+            font-size: 1.5rem;
+            color: var(--color-primary);
+            font-weight: 600;
+        }
+
+        .subtopics {
+            list-style-type: none;
+            padding-left: 10px;
+        }
+
+        .subtopics li {
+            color: var(--color-neutral-dark);
+            font-size: 1rem;
+            margin-bottom: 8px;
+            position: relative;
+            padding-left: 15px;
+        }
+
+        .subtopics li::before {
+            content: "•";
+            color: var(--color-accent);
+            position: absolute;
+            left: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Bootstrap Navbar -->
+    <nav class="navbar navbar-expand-lg">
+        <div class="container">
+            <a class="navbar-brand" href="dashboard.html">Path Finder</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <!-- ms-auto pushes the navbar items to the right -->
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="dashboard.html">Dashboard</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="roadmap.html">Paths</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="feedback.html">Community</a>
+                    </li>
+                    <!-- Profile dropdown with icon -->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="profileDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fas fa-user-circle profile-icon"></i>Profile
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="profileDropdown">
+                            <li><a class="dropdown-item" href="profile.html"><i class="fas fa-user me-2"></i>My Profile</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="index.html"><i class="fas fa-sign-out-alt me-2"></i>Logout</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <!-- Section Title -->
+        <div class="section-title">
+            <h2>Data Science <span>Roadmap</span></h2>
+        </div>
+
+        <!-- Roadmap Cards -->
+        <div class="roadmap-container">
+            <!-- Mathematics and Statistics Card -->
+            <div class="roadmap-card">
+                <i class="fas fa-calculator"></i>
+                <h4>Mathematics & Statistics</h4>
+                <ul class="subtopics">
+                    <li>Probability Theory</li>
+                    <li>Descriptive Statistics</li>
+                    <li>Inferential Statistics</li>
+                    <li>Linear Algebra</li>
+                    <li>Calculus</li>
+                </ul>
+            </div>
+
+            <!-- Programming Card -->
+            <div class="roadmap-card">
+                <i class="fas fa-code"></i>
+                <h4>Programming</h4>
+                <ul class="subtopics">
+                    <li>Python Basics and Libraries</li>
+                    <li>R for Statistical Analysis</li>
+                    <li>SQL for Data Extraction</li>
+                    <li>Data Structures & Algorithms</li>
+                </ul>
+            </div>
+
+            <!-- Data Cleaning and Preprocessing Card -->
+            <div class="roadmap-card">
+                <i class="fas fa-broom"></i>
+                <h4>Data Cleaning & Preprocessing</h4>
+                <ul class="subtopics">
+                    <li>Handling Missing Values</li>
+                    <li>Data Imputation Techniques</li>
+                    <li>Data Normalization and Scaling</li>
+                    <li>Outlier Detection</li>
+                    <li>Feature Engineering</li>
+                </ul>
+            </div>
+
+            <!-- Exploratory Data Analysis (EDA) Card -->
+            <div class="roadmap-card">
+                <i class="fas fa-search"></i>
+                <h4>Exploratory Data Analysis</h4>
+                <ul class="subtopics">
+                    <li>Data Visualization Techniques</li>
+                    <li>Correlation Analysis</li>
+                    <li>Identifying Data Distributions</li>
+                    <li>Handling Categorical Data</li>
+                </ul>
+            </div>
+
+            <!-- Machine Learning Algorithms Card -->
+            <div class="roadmap-card">
+                <i class="fas fa-brain"></i>
+                <h4>Machine Learning Algorithms</h4>
+                <ul class="subtopics">
+                    <li>Linear & Logistic Regression</li>
+                    <li>Decision Trees & Random Forests</li>
+                    <li>Support Vector Machines (SVM)</li>
+                    <li>K-Means Clustering</li>
+                    <li>K-Nearest Neighbors (KNN)</li>
+                </ul>
+            </div>
+
+            <!-- Deep Learning Card -->
+            <div class="roadmap-card">
+                <i class="fas fa-network-wired"></i>
+                <h4>Deep Learning</h4>
+                <ul class="subtopics">
+                    <li>Neural Networks Fundamentals</li>
+                    <li>Convolutional Neural Networks</li>
+                    <li>Recurrent Neural Networks</li>
+                    <li>Autoencoders</li>
+                    <li>Generative Adversarial Networks</li>
+                </ul>
+            </div>
+
+            <!-- Model Evaluation & Tuning Card -->
+            <div class="roadmap-card">
+                <i class="fas fa-sliders-h"></i>
+                <h4>Model Evaluation & Tuning</h4>
+                <ul class="subtopics">
+                    <li>Cross-Validation</li>
+                    <li>Precision, Recall, F1-Score</li>
+                    <li>Hyperparameter Tuning</li>
+                    <li>Grid Search & Random Search</li>
+                </ul>
+            </div>
+
+            <!-- Big Data & Distributed Computing Card -->
+            <div class="roadmap-card">
+                <i class="fas fa-cloud"></i>
+                <h4>Big Data Technologies</h4>
+                <ul class="subtopics">
+                    <li>Hadoop Ecosystem</li>
+                    <li>Apache Spark</li>
+                    <li>MapReduce</li>
+                    <li>NoSQL Databases</li>
+                </ul>
+            </div>
+
+            <!-- Data Visualization Card -->
+            <div class="roadmap-card">
+                <i class="fas fa-chart-line"></i>
+                <h4>Data Visualization</h4>
+                <ul class="subtopics">
+                    <li>Matplotlib & Seaborn</li>
+                    <li>ggplot2 (R)</li>
+                    <li>Tableau</li>
+                    <li>Power BI</li>
+                </ul>
+            </div>
+
+            <!-- Advanced Topics & Specializations Card -->
+            <div class="roadmap-card">
+                <i class="fas fa-graduation-cap"></i>
+                <h4>Advanced Topics</h4>
+                <ul class="subtopics">
+                    <li>Natural Language Processing</li>
+                    <li>Reinforcement Learning</li>
+                    <li>Time Series Forecasting</li>
+                    <li>Data Science in Business</li>
+                </ul>
+            </div>
+
+            <!-- Practice & Real-World Projects Card -->
+            <div class="roadmap-card">
+                <i class="fas fa-laptop-code"></i>
+                <h4>Practice & Projects</h4>
+                <ul class="subtopics">
+                    <li>Kaggle Competitions</li>
+                    <li>Open-Source Contributions</li>
+                    <li>Personal Projects</li>
+                    <li>Case Studies</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS and Popper.js -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
