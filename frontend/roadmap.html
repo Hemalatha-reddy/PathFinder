@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSE Courses</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome for icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        /* Color Palette */
+        :root {
+            --color-accent: #88BDBC;
+            --color-primary: #254E58;
+            --color-secondary: #112D32;
+            --color-neutral-dark: #4F4A41;
+            --color-neutral-light: #6E6658;
+            --color-white: #FFFFFF;
+            --color-muted: #DADADA;
+        }
+
+        body {
+            background-color: var(--color-white);
+            color: var(--color-neutral-dark);
+            font-family: 'Segoe UI', sans-serif;
+            padding-top: 0;
+        }
+
+        .navbar {
+            background-color: var(--color-accent);
+            padding: 20px;
+            border-bottom: 1px solid var(--color-primary);
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .navbar-brand {
+            color: var(--color-secondary);
+            font-size: 2rem;
+            font-family: 'Montserrat', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+            font-weight: bold;
+        }
+        
+        .nav-link {
+            color: var(--color-secondary);
+            transition: color 0.2s ease;
+            font-family: 'Arial', sans-serif;
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 500;
+        }
+        
+        .nav-link:hover {
+            color: var(--color-primary);
+        }
+        
+        .nav-item.active .nav-link {
+            color: var(--color-primary);
+            font-weight: 600;
+        }
+        
+        .navbar-toggler-icon {
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='30' height='30' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(17, 45, 50, 0.8)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+        }
+        
+        .dropdown-menu {
+            background-color: var(--color-accent);
+            border: 1px solid var(--color-primary);
+        }
+        
+        .dropdown-item {
+            color: var(--color-secondary);
+        }
+        
+        .dropdown-item:hover {
+            background-color: var(--color-primary);
+            color: var(--color-white);
+        }
+        
+        .profile-icon {
+            font-size: 1.2rem;
+            margin-right: 5px;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-top: 50px;
+            margin-bottom: 30px;
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--color-primary);
+        }
+
+        .section-title span {
+            color: var(--color-accent);
+        }
+
+        .courses-section {
+            padding: 50px 20px;
+        }
+
+        .features-section {
+            padding: 50px 20px;
+            background-color: #f7f7f7;
+        }
+
+        .card {
+            border-radius: 10px;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: none;
+            border-left: 8px solid var(--color-accent);
+            height: 100%;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .card:nth-child(3n+1) {
+            border-left-color: var(--color-accent);
+        }
+
+        .card:nth-child(3n+2) {
+            border-left-color: var(--color-primary);
+        }
+
+        .card:nth-child(3n+3) {
+            border-left-color: var(--color-secondary);
+        }
+
+        .card-title {
+            font-size: 1.5rem;
+            color: var(--color-primary);
+            font-weight: 600;
+        }
+
+        .card-text {
+            color: var(--color-neutral-dark);
+        }
+
+        .btn-primary {
+            background-color: var(--color-primary);
+            border-color: var(--color-primary);
+        }
+
+        .btn-primary:hover {
+            background-color: var(--color-secondary);
+            border-color: var(--color-secondary);
+        }
+
+        .modal-content {
+            border-radius: 10px;
+        }
+
+        .modal-header {
+            background-color: var(--color-accent);
+            color: var(--color-secondary);
+            border-radius: 10px 10px 0 0;
+        }
+
+        .modal-title {
+            color: var(--color-secondary);
+            font-weight: 600;
+        }
+
+        .modal-body h5 {
+            color: var(--color-primary);
+        }
+
+        .accordion-button {
+            color: var(--color-primary);
+        }
+
+        .accordion-button:not(.collapsed) {
+            background-color: var(--color-accent);
+            color: var(--color-secondary);
+        }
+
+        .accordion-body {
+            color: var(--color-neutral-dark);
+        }
+        
+        .call-to-action-section {
+            padding: 50px;
+            background-color: var(--color-secondary);
+            color: var(--color-white);
+            text-align: center;
+        }
+
+        .footer-section {
+            padding: 20px;
+            background-color: var(--color-primary);
+            color: var(--color-white);
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <!-- Bootstrap Navbar -->
+    <nav class="navbar navbar-expand-lg">
+        <div class="container">
+            <a class="navbar-brand" href="dashboard.html">Path Finder</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <!-- ms-auto pushes the navbar items to the right -->
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="dashboard.html">Dashboard</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="roadmap.html">Paths</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="feedback.html">Community</a>
+                    </li>
+                    <!-- Profile dropdown with icon -->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="profileDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fas fa-user-circle profile-icon"></i>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="profileDropdown">
+                            <li><a class="dropdown-item" href="profile.html"><i class="fas fa-user me-2"></i>My Profile</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="index.html"><i class="fas fa-sign-out-alt me-2"></i>Logout</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Section Title -->
+    <div class="section-title">
+        <h2>TIME <span>TO LEARN</span></h2>
+    </div>
+
+    <div class="courses-section" id="courses">
+        <div class="container">
+            <div class="row row-cols-1 row-cols-md-3 g-4">
+                <div class="col">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <i class="fas fa-database fa-3x mb-3" style="color: var(--color-primary);"></i>
+                            <h5 class="card-title">Data Structures</h5>
+                            <p class="card-text">Introduction to data structures such as arrays, linked lists, and trees.</p>
+                            <a href="../frontend/roadmaps/dataStructure.html">
+                                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#data-structures-modal">Get Started</button>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <i class="fas fa-code fa-3x mb-3" style="color: var(--color-primary);"></i>
+                            <h5 class="card-title">Algorithms</h5>
+                            <p class="card-text">Introduction to algorithms such as sorting, searching, and graph traversal.</p>
+                            <a href="../frontend/roadmaps/algorithm.html">
+                                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#algorithms-modal">Get Started</button>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <i class="fas fa-network-wired fa-3x mb-3" style="color: var(--color-primary);"></i>
+                            <h5 class="card-title">Computer Networks</h5>
+                            <p class="card-text">Introduction to computer networks including communication protocols and network architecture.</p>
+                            <a href="../frontend/roadmaps/computerNetworks.html">
+                                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#computer-networks-modal">Get Started</button>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <i class="fas fa-server fa-3x mb-3" style="color: var(--color-primary);"></i>
+                            <h5 class="card-title">Database Systems</h5>
+                            <p class="card-text">Introduction to database systems including data modeling, normalization, and query optimization.</p>
+                            <a href="../frontend/roadmaps/dbms.html">
+                                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#database-systems-modal">Get Started</button>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <i class="fas fa-cogs fa-3x mb-3" style="color: var(--color-primary);"></i>
+                            <h5 class="card-title">Operating Systems</h5>
+                            <p class="card-text">Introduction to operating systems including process management, memory management, and file systems.</p>
+                            <a href="../frontend/roadmaps/os.html">
+                                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#operating-systems-modal">Get Started</button>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <i class="fas fa-laptop-code fa-3x mb-3" style="color: var(--color-primary);"></i>
+                            <h5 class="card-title">Web Development</h5>
+                            <p class="card-text">Introduction to web development including HTML, CSS, JavaScript, and server-side programming.</p>
+                            <a href="../frontend/roadmaps/webDev.html">
+                                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#web-development-modal">Get Started</button>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <i class="fas fa-brain fa-3x mb-3" style="color: var(--color-primary);"></i>
+                            <h5 class="card-title">Machine Learning</h5>
+                            <p class="card-text">Introduction to machine learning including supervised and unsupervised learning, and neural networks.</p>
+                            <a href="../frontend/roadmaps/ml.html">
+                                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#machine-learning-modal">Get Started</button>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <i class="fas fa-chart-pie fa-3x mb-3" style="color: var(--color-primary);"></i>
+                            <h5 class="card-title">Data Science</h5>
+                            <p class="card-text">Introduction to data science including data visualization, statistical analysis, and data mining.</p>
+                            <a href="../frontend/roadmaps/dataScience.html">
+                                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#data-science-modal">Get Started</button>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <i class="fas fa-cloud fa-3x mb-3" style="color: var(--color-primary);"></i>
+                            <h5 class="card-title">Cloud Computing</h5>
+                            <p class="card-text">Introduction to cloud computing including cloud infrastructure, cloud security, and cloud applications.</p>
+                            <a href="../frontend/roadmaps/cloud.html">
+                                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#cloud-computing-modal">Get Started</button>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modals - Keeping the original modals with updated styling -->
+    <div class="modal fade" id="data-structures-modal" tabindex="-1" aria-labelledby="data-structures-modal-label" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="data-structures-modal-label">Data Structures</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <h5>Course Overview</h5>
+                    <p>This course introduces the basic concepts of data structures, including arrays, linked lists, stacks, queues, trees, and graphs.</p>
+                    <h5>Course Objectives</h5>
+                    <ol>
+                        <li>Understand the basic concepts of data structures</li>
+                        <li>Implement data structures using programming languages</li>
+                        <li>Analyze the time and space complexity of data structures</li>
+                    </ol>
+                    <h5>Course Outline</h5>
+                    <div class="accordion" id="data-structures-accordion">
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="data-structures-1-header">
+                                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#data-structures-1" aria-expanded="true" aria-controls="data-structures-1">
+                                    Week 1: Introduction to Data Structures
+                                </button>
+                            </h2>
+                            <div id="data-structures-1" class="accordion-collapse collapse show" aria-labelledby="data-structures-1-header" data-bs-parent="#data-structures-accordion">
+                                <div class="accordion-body">
+                                    <p>This week introduces the basic concepts of data structures, including arrays, linked lists, stacks, queues, trees, and graphs.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="data-structures-2-header">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#data-structures-2" aria-expanded="false" aria-controls="data-structures-2">
+                                    Week 2: Implementation of Data Structures
+                                </button>
+                            </h2>
+                            <div id="data-structures-2" class="accordion-collapse collapse" aria-labelledby="data-structures-2-header" data-bs-parent="#data-structures-accordion">
+                                <div class="accordion-body">
+                                    <p>This week implements data structures using programming languages.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Bootstrap JS and Popper.js -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
