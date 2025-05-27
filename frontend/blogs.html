@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Health Blog Section</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome for icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        /* Color Palette */
+        :root {
+            --color-accent: #88BDBC;
+            --color-primary: #254E58;
+            --color-secondary: #112D32;
+            --color-neutral-dark: #4F4A41;
+            --color-neutral-light: #6E6658;
+            --color-white: #FFFFFF;
+            --color-muted: #DADADA;
+        }
+
+        body {
+            background-color: var(--color-white);
+            color: var(--color-neutral-dark);
+            font-family: 'Segoe UI', sans-serif;
+            padding-top: 20px;
+        }
+
+        .navbar {
+            background-color: var(--color-accent);
+            padding: 20px;
+            border-bottom: 1px solid var(--color-primary);
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .navbar-brand {
+            color: var(--color-secondary);
+            font-size: 2rem;
+            font-family: 'Montserrat', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+            font-weight: bold;
+        }
+        
+        .nav-link {
+            color: var(--color-secondary);
+            transition: color 0.2s ease;
+            font-family: 'Arial', sans-serif;
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 500;
+        }
+        
+        .nav-link:hover {
+            color: var(--color-primary);
+        }
+        
+        .nav-item.active .nav-link {
+            color: var(--color-primary);
+            font-weight: 600;
+        }
+        
+        .navbar-toggler-icon {
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='30' height='30' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(17, 45, 50, 0.8)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+        }
+        
+        .dropdown-menu {
+            background-color: var(--color-accent);
+            border: 1px solid var(--color-primary);
+        }
+        
+        .dropdown-item {
+            color: var(--color-secondary);
+        }
+        
+        .dropdown-item:hover {
+            background-color: var(--color-primary);
+            color: var(--color-white);
+        }
+        
+        .profile-icon {
+            font-size: 1.2rem;
+            margin-right: 5px;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-top: 50px;
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--color-primary);
+        }
+
+        .section-title span {
+            color: var(--color-accent);
+        }
+
+        /* Blog specific styles */
+        .blog-section {
+            padding: 80px 0 50px;
+        }
+
+        .blog-card {
+            background-color: var(--color-white);
+            border-radius: 10px;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin-bottom: 30px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border-left: 8px solid var(--color-accent);
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .blog-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .blog-card:nth-child(3n+1) {
+            border-left-color: var(--color-accent);
+        }
+
+        .blog-card:nth-child(3n+2) {
+            border-left-color: var(--color-primary);
+        }
+
+        .blog-card:nth-child(3n+3) {
+            border-left-color: var(--color-secondary);
+        }
+
+        .blog-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 5px;
+            margin-bottom: 15px;
+        }
+
+        .blog-card h3 {
+            font-size: 1.5rem;
+            color: var(--color-primary);
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .blog-card p {
+            color: var(--color-neutral-dark);
+            margin-bottom: 15px;
+            flex-grow: 1;
+        }
+
+        .read-more-btn {
+            background-color: var(--color-accent);
+            color: var(--color-secondary);
+            border: none;
+            padding: 8px 16px;
+            border-radius: 5px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+        }
+
+        .read-more-btn:hover {
+            background-color: var(--color-primary);
+            color: var(--color-white);
+            transform: translateY(-3px);
+        }
+
+        .home-btn {
+            background-color: var(--color-white);
+            color: var(--color-secondary);
+            text-decoration: none;
+            font-size: 1rem;
+            font-weight: bold;
+            padding: 8px 15px;
+            border-radius: 5px;
+            transition: 0.3s;
+        }
+
+        .home-btn:hover {
+            background-color: var(--color-primary);
+            color: var(--color-white);
+        }
+
+        /* Add spacing between rows */
+        .row {
+            margin-top: 30px;
+        }
+
+        h2.text-center {
+            color: var(--color-primary);
+            font-size: 2.5rem;
+            font-weight: 700;
+        }
+
+        p.text-center {
+            color: var(--color-neutral-dark);
+            font-size: 1.1rem;
+            margin-bottom: 30px;
+        }
+        
+    </style>
+</head>
+
+<body>
+    <!-- Bootstrap Navbar -->
+    <nav class="navbar navbar-expand-lg">
+        <div class="container">
+            <a class="navbar-brand" href="dashboard.html">Path Finder</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <!-- ms-auto pushes the navbar items to the right -->
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="dashboard.html">Dashboard</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="roadmap.html">Paths</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="feedback.html">Community</a>
+                    </li>
+                    <!-- Profile dropdown with icon -->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="profileDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fas fa-user-circle profile-icon"></i>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="profileDropdown">
+                            <li><a class="dropdown-item" href="profile.html"><i class="fas fa-user me-2"></i>My Profile</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="index.html"><i class="fas fa-sign-out-alt me-2"></i>Logout</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-5">
+        <div class="blog-section">
+            <div class="container">
+                <h2 class="text-center">Our Blog</h2>
+                <p class="text-center">Insights, innovations, and everything tech — decoded!!</p>
+    
+                <div class="row">
+                    
+                    <div class="col-md-4">
+                        <div class="blog-card">
+                            <img src="../images/blogs/coding1.png" alt="DSA Learning Experience">
+                            <h3>DSA Learning Experience</h3>
+                            <p>🧠 DSA taught me how to think, not just how to code.</p>
+                            <button onclick="window.open('https://medium.com/%40gaganveerbawa/my-first-two-weeks-with-data-structures-and-algorithms-what-ive-learned-bb6a63d0bc', '_blank')" class="read-more-btn">Read More</button>
+                        </div>
+                    </div>
+    
+                    
+                    <div class="col-md-4">
+                        <div class="blog-card">
+                            <img src="../images/blogs/cs2.png" alt="Computer Science Engineering Journey">
+                            <h3>Computer Science Engineering Journey</h3>
+                            <p>🔥 Code. Break. Fix. Repeat.🔁</p>
+                            <button onclick="window.open('https://www.geeksforgeeks.org/my-journey-as-a-computer-science-engineering-student/?utm_source=chatgpt.com', '_blank')" class="read-more-btn">Read More</button>
+                        </div>
+                    </div>
+    
+                    
+                    <div class="col-md-4">
+                        <div class="blog-card">
+                            <img src="../images/blogs/ai3.png" alt="AI as a Study Tool">
+                            <h3>AI as a Study Tool</h3>
+                            <p>⚡ AI ≠ Shortcut… it's a 🚀 to smart learning.</p>
+                            <button onclick="window.open('https://www.theguardian.com/technology/2024/oct/05/chatgpt-has-become-the-best-teammate-to-these-sydney-university-students-but-is-there-a-limit?utm_source=chatgpt.com', '_blank')" class="read-more-btn">Read More</button>
+                        </div>
+                    </div>
+    
+                    
+                    <div class="col-md-4">
+                        <div class="blog-card">
+                            <img src="../images/blogs/ai4.png" alt="AI Enhancing Learning">
+                            <h3>AI Enhancing Learning</h3>
+                            <p>🤖📘 AI isn't replacing learning—it's redefining it.</p>
+                            <button onclick="window.open('https://www.sfchronicle.com/opinion/openforum/article/ai-education-20168638.php?utm_source=chatgpt.com', '_blank')" class="read-more-btn">Read More</button>
+                        </div>
+                    </div>
+    
+                    
+                    <div class="col-md-4">
+                        <div class="blog-card">
+                            <img src="../images/blogs/google5.png" alt="Deep Learning Course by Google">
+                            <h3>Deep Learning Course by Google</h3>
+                            <p>🧠🚀 Go deep or go home — Google's got the course for that.</p>
+                            <button onclick="window.open('https://time.com/4190584/google-free-course-deep-learning/?utm_source=chatgpt.com', '_blank')" class="read-more-btn">Read More</button>
+                        </div>
+                    </div>
+    
+                    
+                    <div class="col-md-4">
+                        <div class="blog-card">
+                            <img src="../images/blogs/cs6.png" alt="Teaching Computer Science">
+                            <h3>Teaching Computer Science</h3>
+                            <p>🎯📖 More than syntax — it's about mindset.</p>
+                            <button onclick="window.open('https://brandonspark.github.io/blog/teaching/', '_blank')" class="read-more-btn">Read More</button>
+                        </div>
+                    </div>
+    
+                    
+                    <div class="col-md-4">
+                        <div class="blog-card">
+                            <img src="../images/blogs/cs7.png" alt="Computer Science Reflections">
+                            <h3>Computer Science Reflections</h3>
+                            <p>💭💻 From confusion to clarity — that's the CS journey.</p>
+                            <button onclick="window.open('https://chingisoinar.medium.com/reflecting-on-my-regret-as-a-cs-student-697d0611d511', '_blank')" class="read-more-btn">Read More</button>
+                        </div>
+                    </div>
+    
+                    
+                    <div class="col-md-4">
+                        <div class="blog-card">
+                            <img src="../images/blogs/se8.png" alt="Software Engineering Career Path">
+                            <h3>Software Engineering Career Path</h3>
+                            <p>🧱🧑‍🏫 Built on passion, tested with persistence, scaled with purpose.</p>
+                            <button onclick="window.open('https://konstantinmb.medium.com/becoming-a-software-engineer-my-story-d19a183dc95d', '_blank')" class="read-more-btn">Read More</button>
+                        </div>
+                    </div>
+    
+                    
+                    <div class="col-md-4">
+                        <div class="blog-card">
+                            <img src="../images/blogs/bootcamp9.png" alt="Coding Bootcamp Experience">
+                            <h3>Coding Bootcamp Experience</h3>
+                            <p>💪💡 Bootcamp taught us to fail fast and build faster.</p>
+                            <button onclick="window.open('https://dev.to/tolentinoel/my-coding-bootcamp-experience-1m4?utm_source=chatgpt.com', '_blank')" class="read-more-btn">Read More</button>
+                        </div>
+                    </div>
+    
+                </div>
+            </div>
+        </div>
+
+    <!-- Bootstrap JS and Popper.js -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
